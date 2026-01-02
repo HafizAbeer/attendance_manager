@@ -1,200 +1,218 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Attendance Manager</title>
-    <link rel="manifest" href="manifest.json">
-    <link rel="stylesheet" href="style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-</head>
+    <link rel="manifest" href="manifest.json" />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
 
-<body>
+  <body>
     <div class="app-container">
-        <header class="app-header">
-            <div class="logo">
-                <h1>Attendance<span>Manager</span></h1>
-            </div>
-            <nav class="main-nav">
-                <button class="nav-btn active" data-tab="attendance">Take Attendance</button>
-                <button class="nav-btn" data-tab="students">Students</button>
-                <button class="nav-btn" data-tab="subjects">Subjects</button>
-                <button class="nav-btn" data-tab="reports">Reports</button>
-            </nav>
-        </header>
-
-        <main id="main-content">
-            <!-- Attendance View -->
-            <section id="attendance-view" class="view-section active">
-                <div class="section-header">
-                    <h2>Today's Attendance <span id="current-date" class="date-badge"></span></h2>
-                    <div class="actions inline-form">
-                        <select id="attendance-subject-select" class="form-select">
-                            <option value="">Select Subject</option>
-                        </select>
-                        <button id="finalize-btn" class="btn btn-primary" disabled>Finalize Attendance</button>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="table-responsive">
-                        <table class="data-table">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Roll No</th>
-                                    <th>Name</th>
-                                    <th>Status</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody id="attendance-list">
-                                <!-- Student rows will be injected here -->
-                            </tbody>
-                        </table>
-                    </div>
-                    <div id="empty-state-attendance" class="empty-state hidden">
-                        <p>No students found. Go to 'Students' tab to add some.</p>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Students View -->
-            <section id="students-view" class="view-section">
-                <div class="section-header">
-                    <h2>Manage Students</h2>
-                    <div class="actions">
-                        <form id="add-student-form" class="inline-form">
-                            <input type="text" id="new-roll-no" placeholder="Roll No" style="width: 120px;" required>
-                            <input type="text" id="new-student-name" placeholder="Enter student name" required>
-                            <button type="submit" class="btn btn-secondary">Add Student</button>
-                        </form>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="table-responsive">
-                        <table class="data-table">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Roll No</th>
-                                    <th>Name</th>
-                                    <th>Total Absent</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody id="students-list">
-                                <!-- Student rows will be injected here -->
-                            </tbody>
-                        </table>
-                    </div>
-                    <div id="empty-state-students" class="empty-state hidden">
-                        <p>No students added yet.</p>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Subjects View -->
-            <section id="subjects-view" class="view-section">
-                <div class="section-header">
-                    <h2>Manage Subjects</h2>
-                    <div class="actions">
-                        <form id="add-subject-form" class="inline-form">
-                            <input type="text" id="new-subject-name" placeholder="Enter subject name" required>
-                            <button type="submit" class="btn btn-secondary">Add Subject</button>
-                        </form>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="table-responsive">
-                        <table class="data-table">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Subject Name</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody id="subjects-list">
-                                <!-- Subject rows injected here -->
-                            </tbody>
-                        </table>
-                    </div>
-                    <div id="empty-state-subjects" class="empty-state hidden">
-                        <p>No subjects added yet.</p>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Reports View -->
-            <section id="reports-view" class="view-section">
-                <div class="section-header">
-                    <h2>Attendance Reports</h2>
-                    <div class="actions">
-                        <select id="reports-subject-select" class="form-select">
-                            <option value="">Select Subject</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="report-summary">
-                        <div class="stat-box">
-                            <span class="stat-value" id="total-students-count">0</span>
-                            <span class="stat-label">Total Students</span>
-                        </div>
-                        <div class="stat-box">
-                            <span class="stat-value" id="total-days-count">0</span>
-                            <span class="stat-label">Days Recorded</span>
-                        </div>
-                    </div>
-
-                    <h3>Absenteeism Record</h3>
-                    <div class="table-responsive">
-                        <table class="data-table">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Roll No</th>
-                                    <th>Name</th>
-                                    <th>Total Absent Days</th>
-                                    <th>Dates Absent</th>
-                                </tr>
-                            </thead>
-                            <tbody id="reports-list">
-                                <!-- Report rows will be injected here -->
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </section>
-        </main>
-
-        <div id="toast-container"></div>
-
-        <!-- Modal for Finalize Logic (Optional, using simple alert/toast for now or an overlay) -->
-        <div id="summary-modal" class="modal hidden">
-            <div class="modal-content">
-                <h3>Attendance Finalized</h3>
-                <p>Date: <span id="modal-date"></span></p>
-                <h4>Absent Students:</h4>
-                <ul id="modal-absent-list"></ul>
-                <button id="close-modal-btn" class="btn btn-primary">Close</button>
-            </div>
+      <header class="app-header">
+        <div class="logo">
+          <h1>Attendance<span>Manager</span></h1>
         </div>
+        <nav class="main-nav">
+          <button class="nav-btn active" data-tab="attendance">
+            Take Attendance
+          </button>
+          <button class="nav-btn" data-tab="students">Students</button>
+          <button class="nav-btn" data-tab="subjects">Subjects</button>
+          <button class="nav-btn" data-tab="reports">Reports</button>
+        </nav>
+      </header>
+
+      <main id="main-content">
+        <section id="attendance-view" class="view-section active">
+          <div class="section-header">
+            <h2>
+              Today's Attendance
+              <span id="current-date" class="date-badge"></span>
+            </h2>
+            <div class="actions inline-form">
+              <select id="attendance-subject-select" class="form-select">
+                <option value="">Select Subject</option>
+              </select>
+              <button id="finalize-btn" class="btn btn-primary" disabled>
+                Finalize Attendance
+              </button>
+            </div>
+          </div>
+          <div class="card">
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Roll No</th>
+                    <th>Name</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="attendance-list"></tbody>
+              </table>
+            </div>
+            <div id="empty-state-attendance" class="empty-state hidden">
+              <p>No students found. Go to 'Students' tab to add some.</p>
+            </div>
+          </div>
+        </section>
+
+        <section id="students-view" class="view-section">
+          <div class="section-header">
+            <h2>Manage Students</h2>
+            <div class="actions">
+              <form id="add-student-form" class="inline-form">
+                <input
+                  type="text"
+                  id="new-roll-no"
+                  placeholder="Roll No"
+                  style="width: 120px"
+                  required
+                />
+                <input
+                  type="text"
+                  id="new-student-name"
+                  placeholder="Enter student name"
+                  required
+                />
+                <button type="submit" class="btn btn-secondary">
+                  Add Student
+                </button>
+              </form>
+            </div>
+          </div>
+          <div class="card">
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Roll No</th>
+                    <th>Name</th>
+                    <th>Total Absent</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="students-list"></tbody>
+              </table>
+            </div>
+            <div id="empty-state-students" class="empty-state hidden">
+              <p>No students added yet.</p>
+            </div>
+          </div>
+        </section>
+
+        <section id="subjects-view" class="view-section">
+          <div class="section-header">
+            <h2>Manage Subjects</h2>
+            <div class="actions">
+              <form id="add-subject-form" class="inline-form">
+                <input
+                  type="text"
+                  id="new-subject-name"
+                  placeholder="Enter subject name"
+                  required
+                />
+                <button type="submit" class="btn btn-secondary">
+                  Add Subject
+                </button>
+              </form>
+            </div>
+          </div>
+          <div class="card">
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Subject Name</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="subjects-list"></tbody>
+              </table>
+            </div>
+            <div id="empty-state-subjects" class="empty-state hidden">
+              <p>No subjects added yet.</p>
+            </div>
+          </div>
+        </section>
+
+        <section id="reports-view" class="view-section">
+          <div class="section-header">
+            <h2>Attendance Reports</h2>
+            <div class="actions">
+              <select id="reports-subject-select" class="form-select">
+                <option value="">Select Subject</option>
+              </select>
+            </div>
+          </div>
+          <div class="card">
+            <div class="report-summary">
+              <div class="stat-box">
+                <span class="stat-value" id="total-students-count">0</span>
+                <span class="stat-label">Total Students</span>
+              </div>
+              <div class="stat-box">
+                <span class="stat-value" id="total-days-count">0</span>
+                <span class="stat-label">Days Recorded</span>
+              </div>
+            </div>
+
+            <h3>Absenteeism Record</h3>
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Roll No</th>
+                    <th>Name</th>
+                    <th>Total Absent Days</th>
+                    <th>Dates Absent</th>
+                  </tr>
+                </thead>
+                <tbody id="reports-list"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <div id="toast-container"></div>
+
+      <div id="summary-modal" class="modal hidden">
+        <div class="modal-content">
+          <h3>Attendance Finalized</h3>
+          <p>Date: <span id="modal-date"></span></p>
+          <h4>Absent Students:</h4>
+          <ul id="modal-absent-list"></ul>
+          <button id="close-modal-btn" class="btn btn-primary">Close</button>
+        </div>
+      </div>
     </div>
 
     <script src="script.js"></script>
     <script>
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('service-worker.js')
-                    .then(reg => console.log('Service Worker Registered!', reg))
-                    .catch(err => console.log('Service Worker registration failed: ', err));
-            });
-        }
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", () => {
+          navigator.serviceWorker
+            .register("service-worker.js")
+            .then((reg) => console.log("Service Worker Registered!", reg))
+            .catch((err) =>
+              console.log("Service Worker registration failed: ", err)
+            );
+        });
+      }
     </script>
-</body>
-
+  </body>
 </html>
