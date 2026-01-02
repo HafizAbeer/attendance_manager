@@ -1,0 +1,16 @@
+{
+  "name": "Attendance Manager",
+  "short_name": "Attendance",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#f3f4f6",
+  "theme_color": "#4f46e5",
+  "description": "Offline-capable Student Attendance Management System",
+  "icons": [
+    {
+      "src": "icon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
